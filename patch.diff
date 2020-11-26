@@ -1,0 +1,219 @@
+diff --git a/.idea/php.xml b/.idea/php.xml
+index cddec8d..d12542f 100644
+--- a/.idea/php.xml
++++ b/.idea/php.xml
+@@ -107,6 +107,7 @@
+       <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+       <path value="$PROJECT_DIR$/vendor/psr/container" />
+       <path value="$PROJECT_DIR$/vendor/composer" />
++      <path value="$PROJECT_DIR$/vendor/laravelcollective/html" />
+     </include_path>
+   </component>
+   <component name="PhpUnit">
+diff --git a/.idea/team11.iml b/.idea/team11.iml
+index c817f32..80ef6c9 100644
+--- a/.idea/team11.iml
++++ b/.idea/team11.iml
+@@ -30,6 +30,7 @@
+       <excludeFolder url="file://$MODULE_DIR$/vendor/hamcrest/hamcrest-php" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/framework" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/tinker" />
++      <excludeFolder url="file://$MODULE_DIR$/vendor/laravelcollective/html" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/league/commonmark" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/league/flysystem" />
+       <excludeFolder url="file://$MODULE_DIR$/vendor/league/mime-type-detection" />
+diff --git a/composer.json b/composer.json
+index 9d06962..1373abb 100644
+--- a/composer.json
++++ b/composer.json
+@@ -13,7 +13,8 @@
+         "fruitcake/laravel-cors": "^2.0",
+         "guzzlehttp/guzzle": "^7.0.1",
+         "laravel/framework": "^8.12",
+-        "laravel/tinker": "^2.5"
++        "laravel/tinker": "^2.5",
++        "laravelcollective/html": "^6.2"
+     },
+     "require-dev": {
+         "facade/ignition": "^2.5",
+diff --git a/composer.lock b/composer.lock
+index 6aabb48..0a259c0 100644
+--- a/composer.lock
++++ b/composer.lock
+@@ -4,7 +4,7 @@
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+         "This file is @generated automatically"
+     ],
+-    "content-hash": "fac753ae2702317b354e7eb283f28cbc",
++    "content-hash": "80d095b9c2f65411aa1142b330af186e",
+     "packages": [
+         {
+             "name": "asm89/stack-cors",
+@@ -1064,6 +1064,74 @@
+             ],
+             "time": "2020-10-29T13:07:12+00:00"
+         },
++        {
++            "name": "laravelcollective/html",
++            "version": "v6.2.0",
++            "source": {
++                "type": "git",
++                "url": "https://github.com/LaravelCollective/html.git",
++                "reference": "3bb99be7502feb2129b375cd026ccb0fa4b66628"
++            },
++            "dist": {
++                "type": "zip",
++                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/3bb99be7502feb2129b375cd026ccb0fa4b66628",
++                "reference": "3bb99be7502feb2129b375cd026ccb0fa4b66628",
++                "shasum": ""
++            },
++            "require": {
++                "illuminate/http": "^6.0|^7.0|^8.0",
++                "illuminate/routing": "^6.0|^7.0|^8.0",
++                "illuminate/session": "^6.0|^7.0|^8.0",
++                "illuminate/support": "^6.0|^7.0|^8.0",
++                "illuminate/view": "^6.0|^7.0|^8.0",
++                "php": ">=7.2.5"
++            },
++            "require-dev": {
++                "illuminate/database": "^6.0|^7.0|^8.0",
++                "mockery/mockery": "~1.0",
++                "phpunit/phpunit": "~7.1"
++            },
++            "type": "library",
++            "extra": {
++                "branch-alias": {
++                    "dev-master": "6.0-dev"
++                },
++                "laravel": {
++                    "providers": [
++                        "Collective\\Html\\HtmlServiceProvider"
++                    ],
++                    "aliases": {
++                        "Form": "Collective\\Html\\FormFacade",
++                        "Html": "Collective\\Html\\HtmlFacade"
++                    }
++                }
++            },
++            "autoload": {
++                "psr-4": {
++                    "Collective\\Html\\": "src/"
++                },
++                "files": [
++                    "src/helpers.php"
++                ]
++            },
++            "notification-url": "https://packagist.org/downloads/",
++            "license": [
++                "MIT"
++            ],
++            "authors": [
++                {
++                    "name": "Adam Engebretson",
++                    "email": "adam@laravelcollective.com"
++                },
++                {
++                    "name": "Taylor Otwell",
++                    "email": "taylorotwell@gmail.com"
++                }
++            ],
++            "description": "HTML and Form Builders for the Laravel Framework",
++            "homepage": "https://laravelcollective.com",
++            "time": "2020-09-07T19:59:40+00:00"
++        },
+         {
+             "name": "league/commonmark",
+             "version": "1.5.7",
+diff --git a/config/app.php b/config/app.php
+index 8409e00..5b144a2 100644
+--- a/config/app.php
++++ b/config/app.php
+@@ -161,7 +161,7 @@ return [
+         Illuminate\Translation\TranslationServiceProvider::class,
+         Illuminate\Validation\ValidationServiceProvider::class,
+         Illuminate\View\ViewServiceProvider::class,
+-
++        Collective\Html\HtmlServiceProvider::class,
+         /*
+          * Package Service Providers...
+          */
+diff --git a/database/seeders/BrandsTableSeeder.php b/database/seeders/BrandsTableSeeder.php
+index adb8e82..ba7377d 100644
+--- a/database/seeders/BrandsTableSeeder.php
++++ b/database/seeders/BrandsTableSeeder.php
+@@ -12,6 +12,10 @@ class BrandsTableSeeder extends Seeder
+      *
+      * @return void
+      */
++    public function generateRandomname()
++    {
++        $name = ['', '滑鼠', '耳機', '螢幕', '麥克風', '網路攝影機'];
++    }
+     public function run()
+     {
+         DB::table('brands')->insert([
+diff --git a/database/seeders/ProductsTableSeeder.php b/database/seeders/ProductsTableSeeder.php
+index 8ae5104..4a42a1e 100644
+--- a/database/seeders/ProductsTableSeeder.php
++++ b/database/seeders/ProductsTableSeeder.php
+@@ -2,6 +2,7 @@
+ 
+ namespace Database\Seeders;
+ 
++use Carbon\Carbon;
+ use Illuminate\Database\Seeder;
+ use Illuminate\Support\Facades\DB;
+ 
+@@ -11,15 +12,46 @@ class ProductsTableSeeder extends Seeder
+     /**
+      * Run the database seeds.
+      *
+-     * @return void
++     * @return string
+      */
++    public function generateRandomString($length = 10) {
++        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
++        $charactersLength = strlen($characters);
++        $randomString = '';
++        for ($i = 0; $i < $length; $i++) {
++            $randomString .= $characters[rand(0, $charactersLength - 1)];
++        }
++        return $randomString;
++    }
++    public function generateRandomname() {
++        $f_name = $this->generateRandomString(rand(2, 15));
++        $f_name = strtolower($f_name);
++        $f_name = ucfirst($f_name);
++        $name = $f_name;
++        return $name;
++    }
++    public function generateRandomclass()
++    {
++        $class = ['鍵盤', '滑鼠', '耳機', '螢幕', '麥克風', '網路攝影機'];
++        return $class[rand(0, count($class)-1)];
++    }
+     public function run()
+     {
+-        DB::table('products')->insert([
+-            'name'=>'Sean',
+-            'home'=>'Taoyuang',
+-            'phone'=>90990,
+-            'ceo'=>'John'
++        for($i=0;$i<500;$i++)
++        {
++            $name = $this->generateRandomname();
++            $class = $this->generateRandomclass();
++            $random_datetime = Carbon::now()->subMinutes(rand(1, 55));
++            DB::table('Products')->insert([
++              'name' => $name,
++              'id'=> rand(1,55),
++              'brand_id' => rand(1,4),
++              'class' => $class,
++              'price' =>rand(1,50000),
++              'line' => rand('有','沒有'),
++              'created_at' => $random_datetime,
++              'updated_at' => $random_datetime
+         ]);
++        }
+     }
+ }

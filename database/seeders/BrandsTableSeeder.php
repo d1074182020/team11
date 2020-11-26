@@ -12,6 +12,10 @@ class BrandsTableSeeder extends Seeder
      *
      * @return void
      */
+    public function generateRandomname()
+    {
+        $name = ['', '滑鼠', '耳機', '螢幕', '麥克風', '網路攝影機'];
+    }
     public function run()
     {
         DB::table('brands')->insert([
