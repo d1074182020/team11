@@ -48,7 +48,7 @@ class ProductsTableSeeder extends Seeder
               'brand_id' => rand(1,4),
               'class' => $class,
               'price' =>rand(1,50000),
-              'line' => rand('有','沒有'),
+              'line' => rand(1,2),
               'created_at' => $random_datetime,
               'updated_at' => $random_datetime
         ]);

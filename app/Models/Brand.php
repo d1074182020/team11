@@ -17,7 +17,4 @@ class Brand extends Model
         'updated_at'
     ];
 
-    public static function create(array $array)
-    {
-    }
 }
