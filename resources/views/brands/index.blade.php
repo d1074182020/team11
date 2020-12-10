@@ -26,7 +26,7 @@
             <td>{{ $brand->name }}</td>
             <td>{{ $brand->home }}</td>
             <td>{{ $brand->phone }}</td>
-            <td>{{ $brand->CEO }}</td>
+            <td>{{ $brand->ceo }}</td>
             <td><a href="{{ route('brands.show', ['id'=>$brand->id])}}">顯示</a></td>
             <td><a href="{{ route('brands.edit', ['id'=>$brand->id])}}">修改</a></td>
             <td>

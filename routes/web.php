@@ -37,6 +37,11 @@ Route::delete('brands/delete/{id}', [BrandsController::class, 'destroy'])->where
 
 //查
 Route::get('products', [ProductsController::class, 'index'])->name('products.index');
+//查詢廠商產品
+Route::get('products/MSI', [ProductsController::class, 'MSI'])->name('products.MSI');
+
+//價格破萬查詢
+Route::get('products/senior', [ProductsController::class, 'senior'])->name('products.senior');
 //新增表單
 Route::get('products/create', [ProductsController::class, 'create'])->name('products.create');
 //新知資料

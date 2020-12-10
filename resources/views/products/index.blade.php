@@ -5,8 +5,17 @@
 @section('team11_theme', '目前有的商品')
 
 @section('team11_contents')
-    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
+    <div class="p-10 border-t border-gray-200 dark:border-gray-700 md:border-t-10 md:border-10">
         <a href="{{ route('products.create') }} ">新增商品</a>
+        <a href="{{ route('products.index') }} ">所有商品</a>
+        <a href="{{ route('products.senior') }} ">破萬商品</a>
+
+
+        <form action="{{url('products/class')}}" method="post">
+            {!! Form::label('pos','選取總類') !!}
+            {!! Form::select('pos',$classs,['class'=>'form-control']) !!}
+        <input class = "btn btn-default" type ="submit" value="查詢"/>
+        @csrf
     </div>
 
     <table>
@@ -24,8 +33,8 @@
     @foreach($products as $product)
             <tr>
                 <td>{{ $product->id }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->brand_id }}</td>
+                <td>{{ $product->pname }}</td>
+                <td>{{ $product->bname }}</td>
                 <td>{{ $product->class }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->line }}</td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BrandsController extends Controller
 {
@@ -14,9 +15,8 @@ class BrandsController extends Controller
     }
     public function edit($id)
     {
-        $brand = Brand::findOrFail($id)->toArray();
-        return view('brands.edit', $brand);
-
+         $brand = Brand::findOrFail($id);
+        return view('brands.edit',['brand'=>$brand]);
     }
     public function show($id)
     {
@@ -46,7 +46,7 @@ class BrandsController extends Controller
     }
     public function update($id,Request $request)
     {
-        $brand = brands::findOrFail($id);
+        $brand = brand::findOrFail($id);
         $brand ->name = $request ->input('name');
         $brand ->home = $request ->input('home');
         $brand ->phone = $request ->input('phone');

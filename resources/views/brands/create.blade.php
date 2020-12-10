@@ -6,24 +6,6 @@
 
 @section('team11_contents')
     {!! Form::open(['url' => 'brands/store']) !!}
-    <div class="form-group">
-        {!! Form::label('name', '廠商名字：') !!}
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('home', '地址：') !!}
-        {!! Form::text('home', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('phone', '廠商電話：') !!}
-        {!! Form::text('phone', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('ceo', '董事長：') !!}
-        {!! Form::text('ceo', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::submit('新增廠商', ['class'=>'btn btn-primary form-control']) !!}
-    </div>
+    @include('brands.form', ['submitButtonText'=>'新增廠商資料'])
     {!! Form::close() !!}
 @endsection
