@@ -8,14 +8,14 @@
     <div class="p-10 border-t border-gray-200 dark:border-gray-700 md:border-t-10 md:border-10">
         <a href="{{ route('products.create') }} ">新增商品</a>
         <a href="{{ route('products.index') }} ">所有商品</a>
-        <a href="{{ route('products.senior') }} ">破萬商品</a>
-
+        <a href="{{ route('products.senior') }}">破萬商品</a>
 
         <form action="{{url('products/class')}}" method="post">
-            {!! Form::label('pos','選取總類') !!}
-            {!! Form::select('pos',$classs,['class'=>'form-control']) !!}
-        <input class = "btn btn-default" type ="submit" value="查詢"/>
-        @csrf
+            @csrf
+            {!! Form::label('class','選取總類') !!}
+            {!! Form::select('ca',$classs,['class'=>'form-control']) !!}
+            <input class = "btn btn-default" type ="submit" value="查詢"/>
+        </form>
     </div>
 
     <table>

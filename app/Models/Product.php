@@ -36,8 +36,8 @@ class Product extends Model
     public function scopesenior($query)
     {
         $query->join('brands', 'products.brand_id', '=', 'brands.id')
-            ->orderBy('price')
             ->where('price', '>', 10000)
+            ->orderBy('price')
             ->select(
                 'products.id',
                 'products.name as pname',
@@ -48,17 +48,16 @@ class Product extends Model
                 'products.line');
     }
 
-    public function scopeallclass($query)
+    public function scopeallclasss($query)
     {
         $query->select('class')->groupBy('class');
     }
 
-    //MSI微星
-    public function scopeMSI($query,$pos)
+    public function scopecategory($query,$ca)
     {
-        $query->join('products', 'products.class', '=', 'class')
-            ->where('class', '=', $pos)
-            ->orderBy('products.id')
+        $query->join('brands', 'products.brand_id', '=', 'brands.id')
+            ->where('class', '=', $ca)
+            ->orderBy('class')
             ->select(
                 'products.id',
                 'products.name as pname',
@@ -67,5 +66,9 @@ class Product extends Model
                 'products.class',
                 'products.price',
                 'products.line');
+    }
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\Brand','brand_id','id');
     }
 }

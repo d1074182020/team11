@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateProductsRequest;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Http\Request;
 class ProductsController extends Controller
 {
     public function index()
     {
         $products = product::alldate()->get();
-        $classs = product::allclass()->get();
+
+        $classs = product::allclasss()->get();
         $data = [];
         foreach ($classs as $class)
         {
@@ -23,20 +24,15 @@ class ProductsController extends Controller
     public function senior()
     {
         $products = product::senior()->get();
-
-             return view('products.index', ['products' => $products]);
-    }
-    public function MSI(Request $request)
-    {
-        $products = product::class($request->input('pos'))->get();
-        $classs = product::allclass()->get();
+        $classs = product::allclasss()->get();
         $data = [];
         foreach ($classs as $class)
         {
             $data["$class->class"] = $class->class;
         }
-        return view('products.index', ['products' => $products,'classs' => $data]);
+             return view('products.index', ['products' => $products,'classs' => $data]);
     }
+
     public function create()
     {
         $brands = DB::table('brands')
@@ -79,7 +75,7 @@ class ProductsController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(CreateProductsRequest $request)
     {
         $name = $request->input('name');
         $brand_id = $request->input('brand_id');
@@ -92,7 +88,6 @@ class ProductsController extends Controller
             'class'=>$class,
             'price'=>$price,
             'line'=>$line,
-            'created'=>Carbon::now()
         ]);
         return redirect('products');
     }
@@ -116,4 +111,28 @@ class ProductsController extends Controller
         $product ->delete();
         return redirect('products');
     }
+
+    public function category(Request $request)
+    {
+        $products = product::category($request->input('ca'))->get();
+        $classs = product::allclasss()->get();
+        $data = [];
+        foreach ($classs as $class)
+        {
+            $data["$class->class"] = $class->class;
+        }
+        return view('products.index', ['products' => $products,'classs' => $data]);
+
+    }
+    //  public function MSI(Request $request)
+    //  {
+    //    $products = product::class($request->input('pos'))->get();
+    //    $classs = product::allclasss()->get();
+    //  $data = [];
+    //   foreach ($classs as $class)
+    //     {
+    //         $data["$class->class"] = $class->classs;
+    //     }
+    //     return view('products.index', ['products' => $products,'classs' => $data]);
+    //   }
 }

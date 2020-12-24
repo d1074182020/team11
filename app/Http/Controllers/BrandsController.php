@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\CreateBrandRequest;
 use App\Models\Brand;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Http\Request;
 class BrandsController extends Controller
 {
     public function index()
@@ -20,15 +20,16 @@ class BrandsController extends Controller
     }
     public function show($id)
     {
-        $brand = Brand::findOrFail($id)->toArray();
-        return view('brands.show', $brand);
+        $brand = Brand::findOrFail($id);
+        $products = $brand->products;
+        return view('brands.show', ['brand'=>$brand,'products'=>$products]);
 
     }
     public function create()
     {
         return view('brands.create');
     }
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request)
     {
         $name = $request->input('name');
         $home = $request->input('home');
@@ -40,7 +41,6 @@ class BrandsController extends Controller
             'home'=>$home,
             'phone'=>$phone,
             'ceo'=>$ceo,
-            'created'=>Carbon::now()
         ]);
         return redirect('brands');
     }
@@ -60,4 +60,7 @@ class BrandsController extends Controller
         $brand ->delete();
         return redirect('brands');
     }
-}
+
+
+
+    }
