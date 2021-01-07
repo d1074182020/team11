@@ -7,6 +7,7 @@
 @section('team11_contents')
     <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
         <a href="{{ route('brands.create') }} ">新增廠商</a>
+
     </div>
 
     <table>

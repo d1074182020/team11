@@ -18,34 +18,16 @@ class Product extends Model
         'created_at',
         'updated_at'
     ];
-
-    public function scopealldate($query)
+    public function brand()
     {
-        $query->join('brands', 'products.brand_id', '=', 'brands.id')
-            ->orderBy('products.id')
-            ->select(
-                'products.id',
-                'products.name as pname',
-                'brands.name as bname',
-                'products.brand_id',
-                'products.class',
-                'products.price',
-                'products.line');
+        return $this->belongsTo('App\Models\Brand','brand_id','id');
     }
 
     public function scopesenior($query)
     {
-        $query->join('brands', 'products.brand_id', '=', 'brands.id')
-            ->where('price', '>', 10000)
-            ->orderBy('price')
-            ->select(
-                'products.id',
-                'products.name as pname',
-                'brands.name as bname',
-                'products.brand_id',
-                'products.class',
-                'products.price',
-                'products.line');
+        $query ->where('price', '>', 10000)
+            ->orderby('price');
+
     }
 
     public function scopeallclasss($query)
@@ -55,20 +37,8 @@ class Product extends Model
 
     public function scopecategory($query,$ca)
     {
-        $query->join('brands', 'products.brand_id', '=', 'brands.id')
-            ->where('class', '=', $ca)
-            ->orderBy('class')
-            ->select(
-                'products.id',
-                'products.name as pname',
-                'brands.name as bname',
-                'products.brand_id',
-                'products.class',
-                'products.price',
-                'products.line');
+        $query->where('class', '=', $ca)
+            ->orderBy('class');
     }
-    public function brand()
-    {
-        return $this->belongsTo('App\Models\Brand','brand_id','id');
-    }
+
 }

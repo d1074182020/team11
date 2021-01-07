@@ -33,8 +33,8 @@
     @foreach($products as $product)
             <tr>
                 <td>{{ $product->id }}</td>
-                <td>{{ $product->pname }}</td>
-                <td>{{ $product->bname }}</td>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->brand->name }}</td>
                 <td>{{ $product->class }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->line }}</td>

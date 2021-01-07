@@ -11,8 +11,7 @@ class ProductsController extends Controller
 {
     public function index()
     {
-        $products = product::alldate()->get();
-
+        $products = product::all();
         $classs = product::allclasss()->get();
         $data = [];
         foreach ($classs as $class)
@@ -95,7 +94,6 @@ class ProductsController extends Controller
     public function update($id,Request $request)
     {
         $product = product::findOrFail($id);
-
         $product ->name = $request ->input('name');
         $product ->brand_id = $request ->input('brand_id');
         $product ->class = $request ->input('class');
@@ -124,15 +122,5 @@ class ProductsController extends Controller
         return view('products.index', ['products' => $products,'classs' => $data]);
 
     }
-    //  public function MSI(Request $request)
-    //  {
-    //    $products = product::class($request->input('pos'))->get();
-    //    $classs = product::allclasss()->get();
-    //  $data = [];
-    //   foreach ($classs as $class)
-    //     {
-    //         $data["$class->class"] = $class->classs;
-    //     }
-    //     return view('products.index', ['products' => $products,'classs' => $data]);
-    //   }
+
 }
