@@ -17,7 +17,7 @@ class CreateBrandsTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('home', 100);
-            $table->integer('phone');
+            $table->string('phone', 100);
             $table->string('ceo', 100);
             $table->timestamps();
         });

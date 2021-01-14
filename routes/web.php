@@ -32,10 +32,7 @@ Route::get('brands/{id}/edit', [BrandsController::class, 'edit'])->where('id', '
 Route::patch('brands/update/{id}', [BrandsController::class, 'update'])->where('id', '[0-9]+')->name('brands.update');
 //刪除
 Route::delete('brands/delete/{id}', [BrandsController::class, 'destroy'])->where('id', '[0-9]+')->name('brands.destroy');
-//台灣
-Route::get('brands/mit', [BrandsController::class, 'mit'])->name('brands.mit');
-//其他
-Route::get('brands/mmm', [BrandsController::class, 'mmm'])->name('brands.mmm');
+
 
 
 //查
