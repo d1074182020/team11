@@ -17,6 +17,8 @@
         <th>地址</th>
         <th>服務電話</th>
         <th>董事長</th>
+        <th>建立時間</th>
+        <th>修改時間</th>
         <th>操作1</th>
         <th>操作2</th>
         <th>操作3</th>
@@ -28,9 +30,13 @@
             <td>{{ $brand->home }}</td>
             <td>{{ $brand->phone }}</td>
             <td>{{ $brand->ceo }}</td>
+            <td>{{ $brand->created_at }}</td>
+            <td>{{ $brand->updated_at }}</td>
             <td><a href="{{ route('brands.show', ['id'=>$brand->id])}}">顯示</a></td>
             <td><a href="{{ route('brands.edit', ['id'=>$brand->id])}}">修改</a></td>
+
             <td>
+
                 <form action="{{ url('/brands/delete', ['id' => $brand->id]) }}" method="post">
                     <input class="btn btn-default" type="submit" value="刪除" />
                     @method('delete')

@@ -26,6 +26,8 @@
         <th>總類</th>
         <th>價格</th>
         <th>有無線</th>
+        <th>建立時間</th>
+        <th>修改時間</th>
         <th>操作1</th>
         <th>操作2</th>
         <th>操作3</th>
@@ -38,6 +40,8 @@
                 <td>{{ $product->class }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->line }}</td>
+                <td>{{ $product->created_at }}</td>
+                <td>{{ $product->updated_at }}</td>
                 <td><a href="{{ route('products.show', ['id'=>$product->id])}}">顯示</a></td>
                 <td><a href="{{ route('products.edit', ['id'=>$product->id])}}">修改</a></td>
                 <td>
